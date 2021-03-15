@@ -146,7 +146,7 @@ public class ItinerarySearch extends AppCompatActivity {
             public void onPlaceSelected(@NonNull Place place) {
                 // TODO: Get info about the selected place.
 //                Toast.makeText(getApplicationContext(), place.getName(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), place.getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), place.getId(), Toast.LENGTH_SHORT).show();
 //                Log.i("place", String.valueOf(place));
                 String placeID = place.getId();
 //                String placeDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=placeID&fields=name,rating,formatted_phone_number&key="+apiKey;

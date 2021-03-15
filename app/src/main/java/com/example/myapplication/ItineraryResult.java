@@ -7,6 +7,7 @@ public class ItineraryResult {
     String resultDescription;
     String resultKey;
 
+
     public ItineraryResult(){
 
     }

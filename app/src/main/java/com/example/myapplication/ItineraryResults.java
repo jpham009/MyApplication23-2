@@ -64,6 +64,12 @@ public class ItineraryResults extends AppCompatActivity {
         resultsendpage = findViewById(R.id.resultsendpage);
         resultsTest = findViewById(R.id.results_text_test);
 
+        String placeId = "";
+
+        if(getIntent().getExtras() != null) {
+            placeId = (String) getIntent().getSerializableExtra("placeId");
+        }
+        resultsTest.setText(placeId);
 
 
 //        btnAddNew = findViewById(R.id.btnAddNew);
@@ -75,7 +81,7 @@ public class ItineraryResults extends AppCompatActivity {
 //
 //
         // working with data
-        resultsList = findViewById(R.id.resultsList);
+//        resultsList = findViewById(R.id.resultsList);
 //        resultsList.setLayoutManager(new LinearLayoutManager(this));
 //        list = new ArrayList<ItineraryResult>();
 
@@ -114,98 +120,99 @@ public class ItineraryResults extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+////
+//        final String apiKey = "AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ";
+//        if (!Places.isInitialized()) {
+//            Places.initialize(getApplicationContext(), apiKey);
+//        }
 //
-        final String apiKey = "AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ";
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), apiKey);
-        }
-
-        // Create a new Places client instance.
-        placesClient = Places.createClient(this);
-
-
-        // Initialize the AutocompleteSupportFragment.
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS));
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(@NonNull Place place) {
-                // TODO: Get info about the selected place.
-                Toast.makeText(getApplicationContext(), place.getId(), Toast.LENGTH_SHORT).show();
-                Log.i("place:::::", String.valueOf(place));
-
-
-                try {
-                    JSONObject jsonObject = new JSONObject((Map) place);
-                    String city = jsonObject.getString("weather");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String placeDetails = "https://maps.googleapis.com/maps/api/place/details/json?" + place.getId() + "=placeID&fields=name,rating,formatted_phone_number&key=" + apiKey;
-                Log.i("place details", String.valueOf(placeDetails));
-
-
-                FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(Objects.requireNonNull(place.getPhotoMetadatas()).get(0))
-                        .build();
-                placesClient.fetchPhoto(photoRequest).addOnSuccessListener(
-                        new OnSuccessListener<FetchPhotoResponse>() {
-                            @Override
-                            public void onSuccess(FetchPhotoResponse response) {
-                                Bitmap bitmap = response.getBitmap();
-//                                ((ImageView) findViewById(R.id.img)).setImageBitmap(bitmap);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        });
-            }
-
-            /*
-            dallas tx placeid = ChIJS5dFe_cZTIYRj2dH9qSb7Lk
-            https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJS5dFe_cZTIYRj2dH9qSb7Lk&fields=name,lat,long&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ
-https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJS5dFe_cZTIYRj2dH9qSb7Lk&fields=geometry/location&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ
-
-            */
-
-            /////////////////////////
-            Geocoder mGeocoder;
-
-            private void getPlaceInfo(double lat, double lon) throws IOException {
-                List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
-                if (addresses.get(0).getPostalCode() != null) {
-                    String ZIP = addresses.get(0).getPostalCode();
-                    Log.d("ZIP CODE", ZIP);
-                }
-
-                if (addresses.get(0).getLocality() != null) {
-                    String city = addresses.get(0).getLocality();
-                    Log.d("CITY", city);
-                }
-
-                if (addresses.get(0).getAdminArea() != null) {
-                    String state = addresses.get(0).getAdminArea();
-                    Log.d("STATE", state);
-                }
-
-                if (addresses.get(0).getCountryName() != null) {
-                    String country = addresses.get(0).getCountryName();
-                    Log.d("COUNTRY", country);
-                }
-            }
-
-
-            //////////////////////////
-
-
-            @Override
-            public void onError(@NonNull Status status) {
-                // TODO: Handle the error.
-                Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        // Create a new Places client instance.
+//        placesClient = Places.createClient(this);
+//
+//
+//        // Initialize the AutocompleteSupportFragment.
+//        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+//        autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
+//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS));
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(@NonNull Place place) {
+//                // TODO: Get info about the selected place.
+//                Toast.makeText(getApplicationContext(), place.getId(), Toast.LENGTH_SHORT).show();
+//                Log.i("place:::::", String.valueOf(place));
+//
+//
+//                try {
+//                    JSONObject jsonObject = new JSONObject((Map) place);
+//                    String city = jsonObject.getString("weather");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                String placeDetails = "https://maps.googleapis.com/maps/api/place/details/json?" + place.getId() + "=placeID&fields=name,rating,formatted_phone_number&key=" + apiKey;
+//                Log.i("place details", String.valueOf(placeDetails));
+//
+//
+//                FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(Objects.requireNonNull(place.getPhotoMetadatas()).get(0))
+//                        .build();
+//                placesClient.fetchPhoto(photoRequest).addOnSuccessListener(
+//                        new OnSuccessListener<FetchPhotoResponse>() {
+//                            @Override
+//                            public void onSuccess(FetchPhotoResponse response) {
+//                                Bitmap bitmap = response.getBitmap();
+////                                ((ImageView) findViewById(R.id.img)).setImageBitmap(bitmap);
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception exception) {
+//                                exception.printStackTrace();
+//                            }
+//                        });
+//            }
+//
+//            /*
+//            dallas tx placeid = ChIJS5dFe_cZTIYRj2dH9qSb7Lk
+//            https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJS5dFe_cZTIYRj2dH9qSb7Lk&fields=name,lat,long&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ
+//https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJS5dFe_cZTIYRj2dH9qSb7Lk&fields=geometry/location&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ
+//
+//            */
+//
+//            /////////////////////////
+//            Geocoder mGeocoder;
+//
+//            private void getPlaceInfo(double lat, double lon) throws IOException {
+//                List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
+//                if (addresses.get(0).getPostalCode() != null) {
+//                    String ZIP = addresses.get(0).getPostalCode();
+//                    Log.d("ZIP CODE", ZIP);
+//                }
+//
+//                if (addresses.get(0).getLocality() != null) {
+//                    String city = addresses.get(0).getLocality();
+//                    Log.d("CITY", city);
+//                }
+//
+//                if (addresses.get(0).getAdminArea() != null) {
+//                    String state = addresses.get(0).getAdminArea();
+//                    Log.d("STATE", state);
+//                }
+//
+//                if (addresses.get(0).getCountryName() != null) {
+//                    String country = addresses.get(0).getCountryName();
+//                    Log.d("COUNTRY", country);
+//                }
+//            }
+//
+//
+//            //////////////////////////
+//
+//
+//            @Override
+//            public void onError(@NonNull Status status) {
+//                // TODO: Handle the error.
+//                Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
     }
 }

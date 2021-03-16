@@ -92,49 +92,16 @@ public class ItinerarySearch extends AppCompatActivity {
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        btnSaveTask.setOnClickListener(v -> {
-            // insert data to database
-            reference = FirebaseDatabase.getInstance().getReference().child("DoesApp").
-                    child("Does" + doesNum);
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    dataSnapshot.getRef().child("itineraryTitle").setValue(itineraryTitle.getText().toString());
-                    dataSnapshot.getRef().child("itineraryDescription").setValue(itineraryDescription.getText().toString());
-                    dataSnapshot.getRef().child("itineraryDate").setValue(itineraryDate.getText().toString());
-                    dataSnapshot.getRef().child("itineraryKey").setValue(itineraryKey);
-
-                    Intent a = new Intent(ItinerarySearch.this, MainActivity.class);
-                    startActivity(a);
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-        });
-
-        btnSearch.setOnClickListener(v -> {
-            Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
-            startActivity(a);
-        });
-
-        btnCancel.setOnClickListener(v -> finish());
-
 
         final String apiKey = "AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ";
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apiKey);
         }
 
+        //////////////// AUTOCOMPLETE /////////////////////
         // Create a new Places client instance.
         placesClient = Places.createClient(this);
-
+        final String[] placeId = {""};
 
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
@@ -145,30 +112,11 @@ public class ItinerarySearch extends AppCompatActivity {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 // TODO: Get info about the selected place.
-//                Toast.makeText(getApplicationContext(), place.getName(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), place.getId(), Toast.LENGTH_SHORT).show();
-//                Log.i("place", String.valueOf(place));
-                String placeID = place.getId();
+                placeId[0] = place.getId();
+
 //                String placeDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=placeID&fields=name,rating,formatted_phone_number&key="+apiKey;
                 Log.i("place details", String.valueOf(place));
-
-
-                FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(Objects.requireNonNull(place.getPhotoMetadatas()).get(0))
-                        .build();
-                placesClient.fetchPhoto(photoRequest).addOnSuccessListener(
-                        new OnSuccessListener<FetchPhotoResponse>() {
-                            @Override
-                            public void onSuccess(FetchPhotoResponse response) {
-//                                Bitmap bitmap = response.getBitmap();
-//                                ((ImageView)findViewById(R.id.img)).setImageBitmap(bitmap);
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        });
             }
 
             @Override
@@ -177,6 +125,43 @@ public class ItinerarySearch extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), status.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        ////////// BUTTON FUNCTIONS //////////////
+        btnSaveTask.setOnClickListener(v -> {
+            // insert data to database
+            reference = FirebaseDatabase.getInstance().getReference().child("DoesApp").
+                    child("Does" + doesNum);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    dataSnapshot.getRef().child("itineraryTitle").setValue(itineraryTitle.getText().toString());
+                    dataSnapshot.getRef().child("itineraryDescription").setValue(itineraryDescription.getText().toString());
+                    dataSnapshot.getRef().child("itineraryDate").setValue(itineraryDate.getText().toString());
+                    dataSnapshot.getRef().child("itineraryKey").setValue(itineraryKey);
+                    Intent a = new Intent(ItinerarySearch.this, MainActivity.class);
+                    startActivity(a);
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+        });
+
+
+        btnSearch.setOnClickListener(v -> {
+            Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
+            a.putExtra("placeId", placeId[0]);
+            startActivity(a);
+
+        });
+
+        btnCancel.setOnClickListener(v -> finish());
+
+
 
     }
 

@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -12,14 +13,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AddressComponents;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
 import com.google.android.libraries.places.api.net.FetchPhotoResponse;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
@@ -29,9 +33,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
@@ -56,7 +63,7 @@ public class ItinerarySearch extends AppCompatActivity {
         itineraryDate.setText(sdf.format(myCalendar.getTime()));
     };
 
-
+String placeGet = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,22 +108,29 @@ public class ItinerarySearch extends AppCompatActivity {
         //////////////// AUTOCOMPLETE /////////////////////
         // Create a new Places client instance.
         placesClient = Places.createClient(this);
-        final String[] placeId = {""};
+//        final String[] placeId = {""};
 
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG, Place.Field.RATING
+        ));
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 // TODO: Get info about the selected place.
-                Toast.makeText(getApplicationContext(), place.getId(), Toast.LENGTH_SHORT).show();
-                placeId[0] = place.getId();
+
+                String city = place.getAddress();
+                String placeAddressComponents = place.getAddressComponents().toString();
+                Log.i("CITY ::: ", city);
+
+                Toast.makeText(getApplicationContext(), city, Toast.LENGTH_SHORT).show();
+                placeGet = city;
+
 
 //                String placeDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=placeID&fields=name,rating,formatted_phone_number&key="+apiKey;
-                Log.i("place details", String.valueOf(place));
+                Log.i("place details", placeAddressComponents);
             }
 
             @Override
@@ -154,7 +168,7 @@ public class ItinerarySearch extends AppCompatActivity {
 
         btnSearch.setOnClickListener(v -> {
             Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
-            a.putExtra("placeId", placeId[0]);
+            a.putExtra("city", placeGet);
             startActivity(a);
 
         });

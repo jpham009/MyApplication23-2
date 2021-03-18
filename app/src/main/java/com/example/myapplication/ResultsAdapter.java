@@ -25,7 +25,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.itinerary_item,parent, false));
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.result_item,parent, false));
     }
 
     @Override

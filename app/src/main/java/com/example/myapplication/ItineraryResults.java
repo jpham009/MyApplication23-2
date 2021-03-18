@@ -1,52 +1,26 @@
 package com.example.myapplication;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.FetchPhotoRequest;
-import com.google.android.libraries.places.api.net.FetchPhotoResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class ItineraryResults extends AppCompatActivity {
 
@@ -96,6 +70,10 @@ public class ItineraryResults extends AppCompatActivity {
             super.onPostExecute(s);
 
 
+            //Delete me
+            Log.i("ALL JSON:::: ", s);
+
+
             // working with data
 
             resultList = new ArrayList<ItineraryResult>();
@@ -113,10 +91,10 @@ public class ItineraryResults extends AppCompatActivity {
                     String price = "";
 //                    try {
                     name = nameObject.getString("name");
-                    if (nameObject.getString("rating") != null) {
+                    if (nameObject.has("rating")) {
                         rating = nameObject.getString("rating");
                     }
-                    if (nameObject.getString("price_level") != null) {
+                    if (nameObject.has("price_level")) {
                         price = nameObject.getString("price_level");
                     }
                     Log.i("Name:", name);
@@ -184,10 +162,10 @@ public class ItineraryResults extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_results);
 
-            resultstitlepage = findViewById(R.id.resultstitlepage);
+            resultstitlepage = findViewById(R.id.titlepage);
             resultssubtitlepage = findViewById(R.id.resultssubtitlepage);
 //        resultsendpage = findViewById(R.id.resultsendpage);
-            resultsTest = findViewById(R.id.results_text_test);
+//            resultsTest = findViewById(R.id.results_text_test);
 
 
             //setup the recycler view for results.
@@ -195,21 +173,37 @@ public class ItineraryResults extends AppCompatActivity {
             itineraryResults.setLayoutManager(new LinearLayoutManager(this));
 
             String city = "";
+            String activity = "";
 
             if (getIntent().getExtras() != null) {
                 city = (String) getIntent().getSerializableExtra("city");
+                activity = (String) getIntent().getSerializableExtra("activity");
             }
 //        resultsTest.setText(placeId);
+
+            city = city.replaceAll(",", "");
+
 
             Log.i("The city is::::::::", city);
 
             int radius = 500;
-            String query = "restaurant in" + city;
+            String query = activity + " in " + city;
+            query = query.replaceAll(" ", "+");
+            Log.i("QUERY::::::", query);
+
 //        String fields = "&fields=formatted_address,icon,name,photos,type,url,price";
             DownloadTask task = new DownloadTask();
             task.execute("https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query + "&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ");
 
-//
+
+            //getting photos from reference
+          //  https://maps.googleapis.com/maps/api/place/photo?photoreference=PHOTO_REFERENCE&sensor=false&maxheight=MAX_HEIGHT&maxwidth=MAX_WIDTH&key=YOUR_API_KEY
+            //example photo reference
+            //ATtYBwJn6VKTA7jzhq46BUVU5H-Z5cfD8X7m_fIW5ihE8u7VuJ7ml3Lblegg6ax7dU-JJQzgtVEvhMIHQ81jS2dzxRnC6-PtJDbLW3TczqZu_rxY8h7PKcgS9wh5QBR0LRumIm-Bioc9GpsQ8zpY21kwQa8wOjHZAd5n-yUgk3LFgWBS7b0J
+
+            //test photo api call
+            //  https://maps.googleapis.com/maps/api/place/photo?photoreference=ATtYBwL4tYveRA8WDMoR&sensor=false&maxheight=MAX_HEIGHT&maxwidth=MAX_WIDTH&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ
+
             // working with data
 //        resultsList = findViewById(R.id.resultsList);
 //        resultsList.setLayoutManager(new LinearLayoutManager(this));

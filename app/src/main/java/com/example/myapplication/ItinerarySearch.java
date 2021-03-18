@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.location.Address;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -13,40 +12,25 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.AddressComponents;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.FetchPhotoRequest;
-import com.google.android.libraries.places.api.net.FetchPhotoResponse;
-import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Random;
 
 public class ItinerarySearch extends AppCompatActivity {
 
     TextView titlepage, addtitle, adddesc, adddate, itineraryDate;
-    EditText itineraryTitle, itineraryDescription;
+    EditText itineraryActivity, itineraryDescription;
     Button btnSaveTask, btnCancel, itineraryCalender, btnSearch;
     DatabaseReference reference;
     Integer doesNum = new Random().nextInt();
@@ -75,12 +59,12 @@ String placeGet = "";
         adddesc = findViewById(R.id.adddesc);
         adddate = findViewById(R.id.adddate);
 
-        itineraryTitle = findViewById(R.id.itinerary_title);
-        itineraryDescription = findViewById(R.id.itinerary_description);
+        itineraryActivity = findViewById(R.id.itinerary_activity);
+//        itineraryDescription = findViewById(R.id.itinerary_description);
         itineraryDate = findViewById(R.id.itinerary_date);
         itineraryCalender = findViewById(R.id.itinerary_calender);
 
-        btnSaveTask = findViewById(R.id.btnSave);
+//        btnSaveTask = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
         btnSearch = findViewById(R.id.btnSearch);
 
@@ -142,33 +126,34 @@ String placeGet = "";
 
 
         ////////// BUTTON FUNCTIONS //////////////
-        btnSaveTask.setOnClickListener(v -> {
-            // insert data to database
-            reference = FirebaseDatabase.getInstance().getReference().child("DoesApp").
-                    child("Does" + doesNum);
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    dataSnapshot.getRef().child("itineraryTitle").setValue(itineraryTitle.getText().toString());
-                    dataSnapshot.getRef().child("itineraryDescription").setValue(itineraryDescription.getText().toString());
-                    dataSnapshot.getRef().child("itineraryDate").setValue(itineraryDate.getText().toString());
-                    dataSnapshot.getRef().child("itineraryKey").setValue(itineraryKey);
-                    Intent a = new Intent(ItinerarySearch.this, MainActivity.class);
-                    startActivity(a);
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-        });
+//        btnSaveTask.setOnClickListener(v -> {
+//            // insert data to database
+//            reference = FirebaseDatabase.getInstance().getReference().child("DoesApp").
+//                    child("Does" + doesNum);
+//            reference.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    dataSnapshot.getRef().child("itineraryTitle").setValue(itineraryTitle.getText().toString());
+//                    dataSnapshot.getRef().child("itineraryDescription").setValue(itineraryDescription.getText().toString());
+//                    dataSnapshot.getRef().child("itineraryDate").setValue(itineraryDate.getText().toString());
+//                    dataSnapshot.getRef().child("itineraryKey").setValue(itineraryKey);
+//                    Intent a = new Intent(ItinerarySearch.this, MainActivity.class);
+//                    startActivity(a);
+//                }
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//                    Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+//
+//        });
 
 
         btnSearch.setOnClickListener(v -> {
             Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
             a.putExtra("city", placeGet);
+            a.putExtra("activity", itineraryActivity.getText().toString());
             startActivity(a);
 
         });

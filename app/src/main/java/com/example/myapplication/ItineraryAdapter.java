@@ -63,7 +63,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            itineraryTitle = itemView.findViewById(R.id.itinerary_title);
+            itineraryTitle = itemView.findViewById(R.id.itinerary_activity);
             itineraryDescription = itemView.findViewById(R.id.itinerary_description);
             itineraryDate = itemView.findViewById(R.id.itinerary_date);
         }

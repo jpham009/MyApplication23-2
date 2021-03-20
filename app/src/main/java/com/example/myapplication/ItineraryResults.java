@@ -119,7 +119,6 @@ public class ItineraryResults extends AppCompatActivity {
             setContentView(R.layout.activity_results);
 
             resultstitlepage = findViewById(R.id.titlepage);
-            resultssubtitlepage = findViewById(R.id.resultssubtitlepage);
             loadingDialog = new ProgressDialog(this);
             loadingDialog.setMessage("Loading..");
             loadingDialog.setTitle("Executing Query");

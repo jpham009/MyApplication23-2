@@ -1,9 +1,11 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +65,10 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
                     itineraryTasks.remove(i);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Itinerary");
                     ref.child(getItineraryKey).removeValue();
-                    notifyDataSetChanged();
+                    Intent intent =new Intent(context,MainActivity.class);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+
                 }
             })
 
@@ -74,6 +79,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
             return false;
         });
+
     }
 
 

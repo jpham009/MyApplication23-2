@@ -6,19 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView titlepage, subtitlepage, endpage;
-    Button btnAddNew;
-
+    TextView titlepage, endpage;
+    FloatingActionButton btnAddNew;
     DatabaseReference reference;
     RecyclerView itineraryTasks;
     ArrayList<ItineraryTask> list;
@@ -28,28 +29,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         titlepage = findViewById(R.id.titlepage);
-        subtitlepage = findViewById(R.id.subtitlepage);
         endpage = findViewById(R.id.endpage);
-
         btnAddNew = findViewById(R.id.btnAddNew);
 
-//        // import font
-//        Typeface MLight = Typeface.createFromAsset(getAssets(), "fonts/ML.ttf");
-//        Typeface MMedium = Typeface.createFromAsset(getAssets(), "fonts/MM.ttf");
-//
-//        // customize font
-//        titlepage.setTypeface(MMedium);
-//        subtitlepage.setTypeface(MLight);
-//        endpage.setTypeface(MLight);
-//
-//        btnAddNew.setTypeface(MLight);
 
         btnAddNew.setOnClickListener(v -> {
             Intent a = new Intent(MainActivity.this, ItinerarySearch.class);
             startActivity(a);
         });
+
+
 
 
         // working with data
@@ -58,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<ItineraryTask>();
 //
         // get data from firebase
-        reference = FirebaseDatabase.getInstance().getReference().child("DoesApp");
+        reference = FirebaseDatabase.getInstance().getReference().child("Itinerary");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
             }
         });
-
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

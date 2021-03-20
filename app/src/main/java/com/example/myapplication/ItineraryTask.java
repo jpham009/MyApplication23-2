@@ -22,32 +22,15 @@ public class ItineraryTask {
         return itineraryKey;
     }
 
-    public void setItineraryKey(String itineraryKey) {
-        this.itineraryKey = itineraryKey;
-    }
-
     public String getItineraryTitle() {
         return itineraryTitle;
-    }
-
-    public void setItineraryTitle(String itineraryTitle) {
-        this.itineraryTitle = itineraryTitle;
     }
 
     public String getItineraryDate() {
         return itineraryDate;
     }
 
-    public void setItineraryDate(String itineraryDate) {
-        this.itineraryDate = itineraryDate;
-    }
+    public String getItineraryDescription() { return itineraryDescription; }
 
-    public String getItineraryDescription() {
-        return itineraryDescription;
-    }
-
-    public void setItineraryDescription(String itineraryDescription) {
-        this.itineraryDescription = itineraryDescription;
-    }
 
 }

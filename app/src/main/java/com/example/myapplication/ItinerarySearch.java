@@ -19,22 +19,19 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.firebase.database.DatabaseReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Random;
 
 public class ItinerarySearch extends AppCompatActivity {
 
     TextView titlepage, addtitle, adddesc, adddate, itineraryDate;
-    EditText itineraryActivity, itineraryDescription;
-    Button btnSaveTask, btnCancel, itineraryCalender, btnSearch;
-    DatabaseReference reference;
-    Integer doesNum = new Random().nextInt();
-    String itineraryKey = Integer.toString(doesNum);
+    EditText itineraryActivity;
+    Button btnCancel;
+    Button itineraryCalender;
+    Button btnSearch;
     PlacesClient placesClient;
 
 
@@ -43,7 +40,6 @@ public class ItinerarySearch extends AppCompatActivity {
     private void updateLabel() {
         String myFormat = "MM/dd/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
         itineraryDate.setText(sdf.format(myCalendar.getTime()));
     };
 
@@ -60,11 +56,9 @@ String placeGet = "";
         adddate = findViewById(R.id.adddate);
 
         itineraryActivity = findViewById(R.id.itinerary_activity);
-//        itineraryDescription = findViewById(R.id.itinerary_description);
         itineraryDate = findViewById(R.id.itinerary_date);
         itineraryCalender = findViewById(R.id.itinerary_calender);
 
-//        btnSaveTask = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
         btnSearch = findViewById(R.id.btnSearch);
 
@@ -95,8 +89,7 @@ String placeGet = "";
 //        final String[] placeId = {""};
 
         // Initialize the AutocompleteSupportFragment.
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG, Place.Field.RATING
         ));
@@ -112,8 +105,6 @@ String placeGet = "";
                 Toast.makeText(getApplicationContext(), city, Toast.LENGTH_SHORT).show();
                 placeGet = city;
 
-
-//                String placeDetails = "https://maps.googleapis.com/maps/api/place/details/json?place_id=placeID&fields=name,rating,formatted_phone_number&key="+apiKey;
                 Log.i("place details", placeAddressComponents);
             }
 
@@ -124,32 +115,6 @@ String placeGet = "";
             }
         });
 
-
-        ////////// BUTTON FUNCTIONS //////////////
-//        btnSaveTask.setOnClickListener(v -> {
-//            // insert data to database
-//            reference = FirebaseDatabase.getInstance().getReference().child("DoesApp").
-//                    child("Does" + doesNum);
-//            reference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    dataSnapshot.getRef().child("itineraryTitle").setValue(itineraryTitle.getText().toString());
-//                    dataSnapshot.getRef().child("itineraryDescription").setValue(itineraryDescription.getText().toString());
-//                    dataSnapshot.getRef().child("itineraryDate").setValue(itineraryDate.getText().toString());
-//                    dataSnapshot.getRef().child("itineraryKey").setValue(itineraryKey);
-//                    Intent a = new Intent(ItinerarySearch.this, MainActivity.class);
-//                    startActivity(a);
-//                }
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//                    Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            });
-//
-//        });
-
-
         btnSearch.setOnClickListener(v -> {
             Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
             a.putExtra("city", placeGet);
@@ -159,8 +124,6 @@ String placeGet = "";
         });
 
         btnCancel.setOnClickListener(v -> finish());
-
-
 
     }
 

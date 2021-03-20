@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
             android:text="Title"
+            android:maxLines="1"
             android:textColor="#000000"
             android:textSize="22sp" />
 

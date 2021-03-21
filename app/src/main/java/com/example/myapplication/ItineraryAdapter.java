@@ -45,7 +45,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.itineraryActivity.setText(ItineraryTasks.get(i).getItineraryActivity());
         myViewHolder.itineraryPrice.setText("Price: " + ItineraryTasks.get(i).getItineraryPrice());
-        myViewHolder.itineraryRating.setText("Rating: " + String.valueOf(ItineraryTasks.get(i).getItineraryRating()));
+        myViewHolder.itineraryRating.setText("Rating: " + ItineraryTasks.get(i).getItineraryRating());
         try{
             myViewHolder.ratingBar.setRating( Float.parseFloat(ItineraryTasks.get(i).getItineraryRating()));
         } catch (NumberFormatException e) {

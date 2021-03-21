@@ -57,7 +57,7 @@ String placeGet = "";
 
         itineraryActivity = findViewById(R.id.itinerary_activity);
         itineraryDate = findViewById(R.id.itinerary_date);
-        itineraryCalender = findViewById(R.id.itinerary_calender);
+//        itineraryCalender = findViewById(R.id.itinerary_calender);
 
         btnCancel = findViewById(R.id.btnCancel);
         btnSearch = findViewById(R.id.btnSearch);
@@ -71,7 +71,7 @@ String placeGet = "";
             updateLabel();
         };
 
-        itineraryCalender.setOnClickListener(v -> {
+        itineraryDate.setOnClickListener(v -> {
             // TODO Auto-generated method stub
             new DatePickerDialog(ItinerarySearch.this, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),

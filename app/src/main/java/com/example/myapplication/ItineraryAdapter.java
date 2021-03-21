@@ -61,13 +61,14 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // Continue with delete operation
-                    Toast.makeText(context, "LONGGGG CLICK", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "LONGGGG CLICK", Toast.LENGTH_SHORT).show();
                     itineraryTasks.remove(i);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Itinerary");
                     ref.child(getItineraryKey).removeValue();
                     Intent intent =new Intent(context,MainActivity.class);
                     context.startActivity(intent);
                     ((Activity)context).finish();
+                    ((Activity)context).overridePendingTransition (0, 0);
 
                 }
             })

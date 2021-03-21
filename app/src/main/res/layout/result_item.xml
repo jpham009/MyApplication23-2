@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="120dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="0dp"
     android:orientation="horizontal"
     tools:visibility="visible">
 
@@ -16,8 +16,8 @@
         android:layout_marginTop="1dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="1dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +33,7 @@
                 android:singleLine="true"
                 android:text="Title"
                 android:textColor="#000000"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.066"
@@ -45,7 +45,7 @@
                 android:id="@+id/result_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Description"
@@ -54,7 +54,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/result_title"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.555" />
 
             <TextView
                 android:id="@+id/result_rating"
@@ -70,31 +70,45 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/add_button"
-                android:layout_width="44dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="71dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="26dp"
-                android:text="+"
-                android:textColor="#FFFFFF"
-                app:iconTint="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/result_title"
-                app:layout_constraintTop_toTopOf="parent"
-                app:rippleColor="#FFFFFF" />
-
             <TextView
-                android:id="@+id/result_date"
+                android:id="@+id/result_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="329dp"
+                android:layout_marginTop="74dp"
+                android:layout_marginEnd="57dp"
                 android:textColor="#ADADAD"
                 android:textSize="12sp"
-                tools:layout_editor_absoluteX="330dp"
-                tools:layout_editor_absoluteY="74dp" />
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/add_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="36dp"
+
+                android:layout_marginBottom="22dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                android:text="+"
+                android:textSize="8sp"
+                app:cornerRadius="25dp"
+                app:iconPadding="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.407" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

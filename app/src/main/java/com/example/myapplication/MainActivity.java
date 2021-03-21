@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         titlepage = findViewById(R.id.titlepage);
-        endpage = findViewById(R.id.endpage);
         btnAddNew = findViewById(R.id.btnAddNew);
 
 

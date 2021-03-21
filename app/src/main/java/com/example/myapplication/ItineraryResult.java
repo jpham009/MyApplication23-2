@@ -3,19 +3,21 @@ package com.example.myapplication;
 public class ItineraryResult {
 
     String resultTitle;
-    String resultDate;
-    String resultDescription;
+    String resultRating;
+    String resultPrice;
     String resultKey;
+    String resultDate;
 
     public ItineraryResult(){
 
     }
 
-    public ItineraryResult(String resultTitle, String resultDate, String resultDescription, String resultKey) {
+    public ItineraryResult(String resultTitle, String resultRating, String resultPrice, String resultKey, String resultDate) {
         this.resultTitle = resultTitle;
-        this.resultDate = resultDate;
-        this.resultDescription = resultDescription;
+        this.resultRating = resultRating;
+        this.resultPrice = resultPrice;
         this.resultKey = resultKey;
+        this.resultDate = resultDate;
     }
 
     public String getResultKey() {
@@ -26,12 +28,17 @@ public class ItineraryResult {
         return resultTitle;
     }
 
+    public String getResultRating() {
+        return resultRating;
+    }
+
+    public String getResultPrice() {
+        return resultPrice;
+    }
+
     public String getResultDate() {
         return resultDate;
     }
 
-    public String getResultDescription() {
-        return resultDescription;
-    }
 
 }

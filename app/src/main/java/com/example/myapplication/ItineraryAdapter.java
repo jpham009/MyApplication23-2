@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,14 +39,18 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-        myViewHolder.itineraryTitle.setText(itineraryTasks.get(i).getItineraryTitle());
-        myViewHolder.itineraryDescription.setText("Price: " + itineraryTasks.get(i).getItineraryDescription());
-        myViewHolder.itineraryDate.setText("Rating: " + itineraryTasks.get(i).getItineraryDate());
+        myViewHolder.itineraryActivity.setText(itineraryTasks.get(i).getItineraryActivity());
+        myViewHolder.itineraryPrice.setText("Price: " + itineraryTasks.get(i).getItineraryPrice());
+        myViewHolder.itineraryRating.setText("Rating: " + itineraryTasks.get(i).getItineraryRating());
+        myViewHolder.itineraryDate.setText(itineraryTasks.get(i).getItineraryDate());
 
-        final String getItineraryTitle = itineraryTasks.get(i).getItineraryTitle();
-        final String getItineraryDescription = itineraryTasks.get(i).getItineraryDescription();
-        final String getItineraryDate = itineraryTasks.get(i).getItineraryDate();
+
+        final String getItineraryActivity = itineraryTasks.get(i).getItineraryActivity();
+        final String getItineraryPrice = itineraryTasks.get(i).getItineraryPrice();
+        final String getItineraryRating = itineraryTasks.get(i).getItineraryRating();
         final String getItineraryKey = itineraryTasks.get(i).getItineraryKey();
+        final String getItineraryDate = itineraryTasks.get(i).getItineraryDate();
+
 
         myViewHolder.setIsRecyclable(false);
 
@@ -91,16 +94,18 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView itineraryTitle;
-        TextView itineraryDescription;
+        TextView itineraryActivity;
+        TextView itineraryPrice;
+        TextView itineraryRating;
         TextView itineraryDate;
         TextView itineraryKey;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            itineraryTitle = itemView.findViewById(R.id.itinerary_activity);
-            itineraryDescription = itemView.findViewById(R.id.itinerary_description);
-            itineraryDate = itemView.findViewById(R.id.itinerary_rating);
+            itineraryActivity = itemView.findViewById(R.id.itinerary_activity);
+            itineraryPrice = itemView.findViewById(R.id.itinerary_price);
+            itineraryRating = itemView.findViewById(R.id.itinerary_rating);
+            itineraryDate = itemView.findViewById(R.id.itinerary_date);
 
         }
     }

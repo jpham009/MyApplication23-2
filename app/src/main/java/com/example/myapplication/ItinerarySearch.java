@@ -33,6 +33,8 @@ public class ItinerarySearch extends AppCompatActivity {
     Button itineraryCalender;
     Button btnSearch;
     PlacesClient placesClient;
+    AutocompleteSupportFragment autocompleteFragment;
+    String placeGet = "";
 
 
     final Calendar myCalendar = Calendar.getInstance();
@@ -43,14 +45,12 @@ public class ItinerarySearch extends AppCompatActivity {
         itineraryDate.setText(sdf.format(myCalendar.getTime()));
     };
 
-String placeGet = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         titlepage = findViewById(R.id.titlepage);
-
         addtitle = findViewById(R.id.addtitle);
         adddesc = findViewById(R.id.adddesc);
         adddate = findViewById(R.id.adddate);
@@ -86,13 +86,20 @@ String placeGet = "";
         //////////////// AUTOCOMPLETE /////////////////////
         // Create a new Places client instance.
         placesClient = Places.createClient(this);
-//        final String[] placeId = {""};
+
+//        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+//        List<Address> addresses = geocoder.getFromLocation(MyLat, MyLong, 1);
+//        String cityName = addresses.get(0).getAddressLine(0);
+//        String stateName = addresses.get(0).getAddressLine(1);
+//        String countryName = addresses.get(0).getAddressLine(2);
+
 
         // Initialize the AutocompleteSupportFragment.
-        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         autocompleteFragment.setTypeFilter(TypeFilter.CITIES);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.PHOTO_METADATAS, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG, Place.Field.RATING
         ));
+        autocompleteFragment.setHint("Arlington, TX, USA");
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
@@ -116,10 +123,18 @@ String placeGet = "";
         });
 
         btnSearch.setOnClickListener(v -> {
-            Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
-            a.putExtra("city", placeGet);
-            a.putExtra("activity", itineraryActivity.getText().toString());
-            startActivity(a);
+            if( itineraryActivity.getText().toString().length() == 0 ) {
+                itineraryActivity.setError("Activity is required!");
+            }
+//            if( itineraryDate.getText().toString() == null ) {
+//                itineraryDate.setError("Date is required!");
+//            }
+            else {
+                Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
+                a.putExtra("city", placeGet);
+                a.putExtra("activity", itineraryActivity.getText().toString());
+                startActivity(a);
+            }
 
         });
 

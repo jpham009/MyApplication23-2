@@ -24,10 +24,7 @@ import java.util.ArrayList;
 
 public class ItineraryResults extends AppCompatActivity {
 
-    TextView resultstitlepage, resultssubtitlepage;
-    TextView resultsTest;
-
-    DatabaseReference reference;
+    TextView resultstitlepage;
     ArrayList<ItineraryResult> resultList;
     ResultsAdapter resultsAdapter;
     RecyclerView itineraryResults;
@@ -96,8 +93,9 @@ public class ItineraryResults extends AppCompatActivity {
                     Log.i("Name:", name);
                     Log.i("Rating:", rating);
                     Log.i("Price:", price);
+                    String key = String.valueOf(i);
                     //add to list
-                    ItineraryResult p = new ItineraryResult(name, rating, price, "0");
+                    ItineraryResult p = new ItineraryResult(name, rating, price, key, "DATE");
                     resultList.add(p);
 
                 }

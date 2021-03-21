@@ -130,7 +130,7 @@
                     android:foreground="@android:drawable/ic_menu_my_calendar" />
 
                 <TextView
-                    android:id="@+id/itinerary_date"
+                    android:id="@+id/itinerary_rating"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

@@ -2,35 +2,39 @@ package com.example.myapplication;
 
 public class ItineraryTask {
 
-    String itineraryTitle;
+    String itineraryActivity;
+    String itineraryRating;
+    String itineraryPrice;
     String itineraryDate;
-    String itineraryDescription;
     String itineraryKey;
 
     public ItineraryTask(){
 
     }
 
-    public ItineraryTask(String itineraryTitle, String itineraryDate, String itineraryDescription, String itineraryKey) {
-        this.itineraryTitle = itineraryTitle;
-        this.itineraryDate = itineraryDate;
-        this.itineraryDescription = itineraryDescription;
+    public ItineraryTask(String itineraryActivity, String itineraryRating, String itineraryPrice, String itineraryKey, String itineraryDate) {
+        this.itineraryActivity = itineraryActivity;
+        this.itineraryRating = itineraryRating;
+        this.itineraryPrice = itineraryPrice;
         this.itineraryKey = itineraryKey;
+        this.itineraryDate = itineraryDate;
     }
 
     public String getItineraryKey() {
         return itineraryKey;
     }
 
-    public String getItineraryTitle() {
-        return itineraryTitle;
+    public String getItineraryActivity() {
+        return itineraryActivity;
     }
 
-    public String getItineraryDate() {
-        return itineraryDate;
+    public String getItineraryRating() {
+        return itineraryRating;
     }
 
-    public String getItineraryDescription() { return itineraryDescription; }
+    public String getItineraryPrice() { return itineraryPrice; }
+
+    public String getItineraryDate() { return itineraryDate; }
 
 
 }

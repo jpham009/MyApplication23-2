@@ -67,6 +67,7 @@ String placeGet = "";
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//            Log.i("CALENDER:::::::", String.valueOf(Calendar.getInstance()));
             updateLabel();
         };
 
@@ -100,12 +101,12 @@ String placeGet = "";
 
                 String city = place.getAddress();
                 String placeAddressComponents = place.getAddressComponents().toString();
-                Log.i("CITY ::: ", city);
+//                Log.i("CITY ::: ", city);
 
                 Toast.makeText(getApplicationContext(), city, Toast.LENGTH_SHORT).show();
                 placeGet = city;
 
-                Log.i("place details", placeAddressComponents);
+//                Log.i("place details", placeAddressComponents);
             }
 
             @Override
@@ -119,6 +120,7 @@ String placeGet = "";
             Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
             a.putExtra("city", placeGet);
             a.putExtra("activity", itineraryActivity.getText().toString());
+            a.putExtra("date", itineraryDate.getText().toString());
             startActivity(a);
 
         });

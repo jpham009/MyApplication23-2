@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,16 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList<ItineraryTask> itineraryTasks;
+    ArrayList<ItineraryTask> ItineraryTasks;
 
     public ItineraryAdapter (Context c, ArrayList<ItineraryTask> p){
         context = c;
-        itineraryTasks = p;
+        ItineraryTasks = p;
     }
 
     @NonNull
@@ -40,14 +43,26 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-        myViewHolder.itineraryTitle.setText(itineraryTasks.get(i).getItineraryTitle());
-        myViewHolder.itineraryDescription.setText("Price: " + itineraryTasks.get(i).getItineraryDescription());
-        myViewHolder.itineraryDate.setText("Rating: " + itineraryTasks.get(i).getItineraryDate());
+        myViewHolder.itineraryActivity.setText(ItineraryTasks.get(i).getItineraryActivity());
+        myViewHolder.itineraryPrice.setText("Price: " + ItineraryTasks.get(i).getItineraryPrice());
+        myViewHolder.itineraryRating.setText("Rating: " + String.valueOf(ItineraryTasks.get(i).getItineraryRating()));
+        try{
+            myViewHolder.ratingBar.setRating( Float.parseFloat(ItineraryTasks.get(i).getItineraryRating()));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        myViewHolder.itineraryDate.setText(ItineraryTasks.get(i).getItineraryDate());
 
-        final String getItineraryTitle = itineraryTasks.get(i).getItineraryTitle();
-        final String getItineraryDescription = itineraryTasks.get(i).getItineraryDescription();
-        final String getItineraryDate = itineraryTasks.get(i).getItineraryDate();
-        final String getItineraryKey = itineraryTasks.get(i).getItineraryKey();
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//        Date date = new Date();
+//        myViewHolder.itinerary_Date.setText(formatter.format(date));
+
+        final String getItineraryActivity = ItineraryTasks.get(i).getItineraryActivity();
+        final String getItineraryPrice = ItineraryTasks.get(i).getItineraryPrice();
+        final String getItineraryRating = ItineraryTasks.get(i).getItineraryRating();
+        final String getItineraryKey = ItineraryTasks.get(i).getItineraryKey();
+        final String getItineraryDate = ItineraryTasks.get(i).getItineraryDate();
+
 
         myViewHolder.setIsRecyclable(false);
 
@@ -62,7 +77,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
                 public void onClick(DialogInterface dialog, int which) {
                     // Continue with delete operation
 //                    Toast.makeText(context, "LONGGGG CLICK", Toast.LENGTH_SHORT).show();
-                    itineraryTasks.remove(i);
+                    ItineraryTasks.remove(i);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Itinerary");
                     ref.child(getItineraryKey).removeValue();
                     Intent intent =new Intent(context,MainActivity.class);
@@ -75,7 +90,6 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
             // A null listener allows the button to dismiss the dialog and take no further action.
             .setNegativeButton(android.R.string.no, null)
-            .setIcon(android.R.drawable.ic_dialog_alert)
             .show();
 
             return false;
@@ -86,21 +100,26 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return itineraryTasks.size();
+        return ItineraryTasks.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView itineraryTitle;
-        TextView itineraryDescription;
-        TextView itineraryDate;
+        TextView itineraryActivity;
+        TextView itineraryPrice;
+        TextView itineraryRating;
         TextView itineraryKey;
+        TextView itineraryDate;
+        RatingBar ratingBar;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            itineraryTitle = itemView.findViewById(R.id.itinerary_activity);
-            itineraryDescription = itemView.findViewById(R.id.itinerary_description);
-            itineraryDate = itemView.findViewById(R.id.itinerary_rating);
+            itineraryActivity = itemView.findViewById(R.id.itinerary_activity);
+            itineraryActivity.setSelected(true);
+            itineraryPrice = itemView.findViewById(R.id.itinerary_price);
+            itineraryRating = itemView.findViewById(R.id.itinerary_rating);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
+            itineraryDate = itemView.findViewById(R.id.itinerary_date);
 
         }
     }

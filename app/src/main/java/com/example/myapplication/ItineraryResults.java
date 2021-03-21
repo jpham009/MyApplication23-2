@@ -24,16 +24,12 @@ import java.util.ArrayList;
 
 public class ItineraryResults extends AppCompatActivity {
 
-    TextView resultstitlepage, resultssubtitlepage;
-    TextView resultsTest;
-
-    DatabaseReference reference;
-    ArrayList<ItineraryResult> resultList;
+    TextView resultstitlepage;
+    ArrayList<ItineraryResult> ItineraryResults;
     ResultsAdapter resultsAdapter;
     RecyclerView itineraryResults;
     ProgressDialog loadingDialog;
-
-
+    String date = "";
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -64,28 +60,23 @@ public class ItineraryResults extends AppCompatActivity {
             }
         }
 
-
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            //Delete me
-            Log.i("ALL JSON:::: ", s);
-
-            // working with data
-            resultList = new ArrayList<ItineraryResult>();
-
+            ItineraryResults = new ArrayList<ItineraryResult>();
+            resultsAdapter = new ResultsAdapter(ItineraryResults.this, ItineraryResults);
+            itineraryResults.setAdapter(resultsAdapter);
 
             try {
 
-                //////////////////
                 JSONObject json = new JSONObject(s);
                 JSONArray results = json.getJSONArray("results");
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject nameObject = results.getJSONObject(i);
                     String name = "";
                     String rating = "";
-                    String price = "";
-//                    try {
+                    String price = "N/A";
+
                     name = nameObject.getString("name");
                     if (nameObject.has("rating")) {
                         rating = nameObject.getString("rating");
@@ -93,25 +84,20 @@ public class ItineraryResults extends AppCompatActivity {
                     if (nameObject.has("price_level")) {
                         price = nameObject.getString("price_level");
                     }
-                    Log.i("Name:", name);
-                    Log.i("Rating:", rating);
-                    Log.i("Price:", price);
+
                     //add to list
-                    ItineraryResult p = new ItineraryResult(name, rating, price, "0");
-                    resultList.add(p);
+                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date);
+                    ItineraryResults.add(p);
 
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            resultsAdapter = new ResultsAdapter(ItineraryResults.this, resultList);
-            itineraryResults.setAdapter(resultsAdapter);
             resultsAdapter.notifyDataSetChanged();
             loadingDialog.dismiss();
         }
     }
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -134,19 +120,17 @@ public class ItineraryResults extends AppCompatActivity {
             String city = "";
             String activity = "";
 
+
             if (getIntent().getExtras() != null) {
                 city = (String) getIntent().getSerializableExtra("city");
                 activity = (String) getIntent().getSerializableExtra("activity");
+                date = (String) getIntent().getSerializableExtra("date");
             }
 
             city = city.replaceAll(",", "");
 
-            Log.i("The city is::::::::", city);
-
-            int radius = 500;
             String query = activity + " in " + city;
             query = query.replaceAll(" ", "+");
-            Log.i("QUERY::::::", query);
 
             DownloadTask task = new DownloadTask();
             task.execute("https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query + "&key=AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ");

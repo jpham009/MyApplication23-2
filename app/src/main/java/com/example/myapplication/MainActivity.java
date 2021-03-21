@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton btnAddNew;
     DatabaseReference reference;
     RecyclerView itineraryTasks;
-    ArrayList<ItineraryTask> list;
+    ArrayList<ItineraryTask> ItineraryTasks;
     ItineraryAdapter itineraryAdapter;
 
     @Override
@@ -47,21 +49,23 @@ public class MainActivity extends AppCompatActivity {
         // working with data
         itineraryTasks = findViewById(R.id.itineraryTasks);
         itineraryTasks.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<ItineraryTask>();
+        ItineraryTasks = new ArrayList<ItineraryTask>();
+        itineraryAdapter = new ItineraryAdapter(MainActivity.this, ItineraryTasks);
+        itineraryTasks.setAdapter(itineraryAdapter);
 //
         // get data from firebase
         reference = FirebaseDatabase.getInstance().getReference().child("Itinerary");
-        reference.addValueEventListener(new ValueEventListener() {
+        Query query = reference.orderByChild("itineraryKey");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // set code to retrieve data and replace layout
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     ItineraryTask p = dataSnapshot1.getValue(ItineraryTask.class);
-                    list.add(p);
+                    ItineraryTasks.add(p);
+
                 }
-                itineraryAdapter = new ItineraryAdapter(MainActivity.this, list);
-                itineraryTasks.setAdapter(itineraryAdapter);
                 itineraryAdapter.notifyDataSetChanged();
             }
 

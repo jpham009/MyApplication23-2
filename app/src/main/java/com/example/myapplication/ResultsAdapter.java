@@ -37,8 +37,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
-        myViewHolder.resultsTitle.setText(ItineraryResults.get(i).getResultTitle());
-        myViewHolder.resultsDescription.setText(ItineraryResults.get(i).getResultDescription());
+        myViewHolder.resultsActivity.setText(ItineraryResults.get(i).getResultActivity());
+        myViewHolder.resultsPrice.setText(ItineraryResults.get(i).getResultPrice());
+        myViewHolder.resultsRating.setText(ItineraryResults.get(i).getResultRating());
         myViewHolder.resultsDate.setText(ItineraryResults.get(i).getResultDate());
         myViewHolder.setIsRecyclable(false);
 
@@ -51,30 +52,34 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView resultsTitle;
-        TextView resultsDescription;
+        TextView resultsActivity;
+        TextView resultsPrice;
+        TextView resultsRating;
         TextView resultsDate;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            resultsTitle = itemView.findViewById(R.id.result_title);
-            resultsDescription = itemView.findViewById(R.id.result_description);
+            resultsActivity = itemView.findViewById(R.id.result_title);
+            resultsPrice = itemView.findViewById(R.id.result_price);
+            resultsRating = itemView.findViewById(R.id.result_rating);
             resultsDate = itemView.findViewById(R.id.result_date);
             Button addButton = itemView.findViewById(R.id.add_button);
             addButton.setOnClickListener(v -> {
 
                 int adapterPosition = getAdapterPosition();
-                Log.i("ADAPTER POSITION" , String.valueOf(adapterPosition));
-                Log.i("PLACE ::: ", resultsTitle.getText() + " " + resultsDescription.getText());
-                Toast.makeText(context.getApplicationContext(), "Added " + resultsTitle.getText() + " to itinerary.",  Toast.LENGTH_SHORT).show();
+//                Log.i("ADAPTER POSITION" , String.valueOf(adapterPosition));
+//                Log.i("PLACE ::: ", resultsActivity.getText() + " " + resultsPrice.getText());
+                Toast.makeText(context.getApplicationContext(), "Added " + resultsActivity.getText() + " to itinerary.",  Toast.LENGTH_SHORT).show();
                 ItineraryResults.get(adapterPosition);
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Itinerary").push();
                 Map<String, Object> map = new HashMap<>();
                 map.put("itineraryKey", databaseReference.getKey());
-                map.put("itineraryTitle", resultsTitle.getText().toString());
-                map.put("itineraryDescription", resultsDescription.getText().toString());
+                map.put("itineraryActivity", resultsActivity.getText().toString());
+                map.put("itineraryPrice", resultsPrice.getText().toString());
+                map.put("itineraryRating", resultsRating.getText().toString());
                 map.put("itineraryDate", resultsDate.getText().toString());
+
                 databaseReference.setValue(map);
 
                 addButton.setEnabled(false);

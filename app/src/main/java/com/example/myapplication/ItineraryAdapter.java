@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
     Context context;
     ArrayList<ItineraryTask> ItineraryTasks;
+
 
     public ItineraryAdapter (Context c, ArrayList<ItineraryTask> p){
         context = c;
@@ -67,6 +69,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
         myViewHolder.setIsRecyclable(false);
 
         myViewHolder.itemView.setOnLongClickListener(v -> {
+
             new AlertDialog.Builder(context)
             .setTitle("Delete entry")
             .setMessage("Are you sure you want to delete this entry?")
@@ -111,6 +114,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
         TextView itineraryKey;
         TextView itineraryDate;
         RatingBar ratingBar;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

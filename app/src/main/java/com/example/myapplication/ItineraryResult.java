@@ -7,17 +7,19 @@ public class ItineraryResult {
     String resultPrice;
     String resultKey;
     String resultDate;
+    String resultPlaceId;
 
     public ItineraryResult(){
 
     }
 
-    public ItineraryResult(String resultActivity, String resultRating, String resultPrice, String resultKey, String resultDate) {
+    public ItineraryResult(String resultActivity, String resultRating, String resultPrice, String resultKey, String resultDate, String resultPlaceId) {
         this.resultActivity = resultActivity;
         this.resultRating = resultRating;
         this.resultPrice = resultPrice;
         this.resultKey = resultKey;
         this.resultDate = resultDate;
+        this.resultPlaceId = resultPlaceId;
     }
 
     public String getResultKey() {
@@ -38,6 +40,10 @@ public class ItineraryResult {
 
     public String getResultDate() {
         return resultDate;
+    }
+
+    public String getResultPlaceId() {
+        return resultPlaceId;
     }
 
 }

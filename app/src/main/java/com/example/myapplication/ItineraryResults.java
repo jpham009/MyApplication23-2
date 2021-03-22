@@ -76,6 +76,7 @@ public class ItineraryResults extends AppCompatActivity {
                     String name = "";
                     String rating = "";
                     String price = "N/A";
+                    String placeId = "";
 
                     name = nameObject.getString("name");
                     if (nameObject.has("rating")) {
@@ -84,9 +85,16 @@ public class ItineraryResults extends AppCompatActivity {
                     if (nameObject.has("price_level")) {
                         price = nameObject.getString("price_level");
                     }
+                    if (nameObject.has("place_id")) {
+                        placeId = nameObject.getString("place_id");
+                    }
+//                    if (nameObject.has("place_id")) {
+////                        price = nameObject.getString("price_level");
+//                        Log.i("PHOTO: ",  String.valueOf(i));
+//                    }
 
                     //add to list
-                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date);
+                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date, placeId);
                     ItineraryResults.add(p);
 
                 }

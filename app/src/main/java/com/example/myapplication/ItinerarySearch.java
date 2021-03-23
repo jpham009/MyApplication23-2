@@ -23,6 +23,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class ItinerarySearch extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class ItinerarySearch extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy"; //In which you need put here
+        String myFormat = "YYYY/MM/dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         itineraryDate.setText(sdf.format(myCalendar.getTime()));
     };
@@ -57,7 +58,6 @@ String placeGet = "";
 
         itineraryActivity = findViewById(R.id.itinerary_activity);
         itineraryDate = findViewById(R.id.itinerary_date);
-//        itineraryCalender = findViewById(R.id.itinerary_calender);
 
         btnCancel = findViewById(R.id.btnCancel);
         btnSearch = findViewById(R.id.btnSearch);
@@ -67,7 +67,6 @@ String placeGet = "";
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//            Log.i("CALENDER:::::::", String.valueOf(Calendar.getInstance()));
             updateLabel();
         };
 

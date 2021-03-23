@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,9 +57,22 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
         }
         myViewHolder.itineraryDate.setText(ItineraryTasks.get(i).getItineraryDate());
 
-//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//        Date date = new Date();
-//        myViewHolder.itinerary_Date.setText(formatter.format(date));
+        myViewHolder.setIsRecyclable(false);
+
+        if (ItineraryTasks.get(i).getItineraryPhotoRef() == null){
+            myViewHolder.itineraryImage.setImageDrawable(context.getDrawable(R.drawable.ic_default_place));
+        }
+        else {
+            String url = "https://maps.googleapis.com/maps/api/place/photo?"
+                    + "maxwidth=400" + "&photoreference=" + ItineraryTasks.get(i).getItineraryPhotoRef() +
+                    "&key=" + "AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ";
+            try {
+                Picasso.get().load(url).into(myViewHolder.itineraryImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
 
         final String getItineraryActivity = ItineraryTasks.get(i).getItineraryActivity();
         final String getItineraryPrice = ItineraryTasks.get(i).getItineraryPrice();
@@ -114,6 +129,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
         TextView itineraryKey;
         TextView itineraryDate;
         RatingBar ratingBar;
+        ImageView itineraryImage;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -122,8 +138,9 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
             itineraryActivity.setSelected(true);
             itineraryPrice = itemView.findViewById(R.id.itinerary_price);
             itineraryRating = itemView.findViewById(R.id.itinerary_rating);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
+            ratingBar = itemView.findViewById(R.id.itinerary_ratingbar);
             itineraryDate = itemView.findViewById(R.id.itinerary_date);
+            itineraryImage = itemView.findViewById(R.id.place_image_itinerary);
 
         }
     }

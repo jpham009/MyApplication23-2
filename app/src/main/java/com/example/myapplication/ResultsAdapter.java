@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.squareup.picasso.Picasso;
 
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHolder> {
 
@@ -49,13 +50,30 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         myViewHolder.resultsActivity.setText(ItineraryResults.get(i).getResultActivity());
         myViewHolder.resultsPrice.setText("Price: " + ItineraryResults.get(i).getResultPrice());
         myViewHolder.resultsRating.setText("Rating: " + ItineraryResults.get(i).getResultRating());
-        myViewHolder.resultsDate.setText(ItineraryResults.get(i).getResultDate());
+
         try{
             myViewHolder.resultsRatingBar.setRating( Float.parseFloat(ItineraryResults.get(i).getResultRating()));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         myViewHolder.setIsRecyclable(false);
+//        myViewHolder.placeImage.setImageDrawable(context.getDrawable(R.drawable.simple_placeholder));
+
+        if (ItineraryResults.get(i).getResultPhotoRef() == null){
+            myViewHolder.placeImage.setImageDrawable(context.getDrawable(R.drawable.ic_default_place));
+        }
+        else {
+            String url = "https://maps.googleapis.com/maps/api/place/photo?"
+                    + "maxwidth=400" + "&photoreference=" + ItineraryResults.get(i).getResultPhotoRef() +
+                    "&key=" + "AIzaSyD37Ltc_DFCSVzpDxJHYfyuC2_doVmcbeQ";
+            try {
+                Picasso.get().load(url).into(myViewHolder.placeImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
 
     }
 
@@ -69,8 +87,8 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         TextView resultsActivity;
         TextView resultsPrice;
         TextView resultsRating;
-        TextView resultsDate;
         RatingBar resultsRatingBar;
+        ImageView placeImage;
 
 
         public MyViewHolder(@NonNull View itemView) {
@@ -78,9 +96,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
             resultsActivity = itemView.findViewById(R.id.result_title);
             resultsPrice = itemView.findViewById(R.id.result_price);
             resultsRating = itemView.findViewById(R.id.result_rating);
-            resultsDate = itemView.findViewById(R.id.result_date);
             resultsRatingBar = itemView.findViewById(R.id.result_ratingbar);
             Button addButton = itemView.findViewById(R.id.add_button);
+            placeImage = itemView.findViewById(R.id.place_image);
             addButton.setOnClickListener(v -> {
 
                 int adapterPosition = getAdapterPosition();
@@ -94,6 +112,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
                 map.put("itineraryPrice", ItineraryResults.get(adapterPosition).getResultPrice());
                 map.put("itineraryRating", ItineraryResults.get(adapterPosition).getResultRating());
                 map.put("itineraryDate", ItineraryResults.get(adapterPosition).getResultDate());
+                map.put("itineraryPhotoRef", ItineraryResults.get(adapterPosition).getResultPhotoRef());
 
                 databaseReference.setValue(map);
 

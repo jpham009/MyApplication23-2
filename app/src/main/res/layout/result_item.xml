@@ -28,50 +28,45 @@
 
             <TextView
                 android:id="@+id/result_title"
-                android:layout_width="234dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:maxLines = "2"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:maxLines="2"
                 android:text="Title"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/add_button"
+                app:layout_constraintStart_toEndOf="@+id/place_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/result_price"
-                android:layout_width="100dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="59dp"
+                android:layout_width="60dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Description"
                 android:textAlignment="textStart"
                 android:textColor="#ADADAD"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/result_rating"
-                app:layout_constraintHorizontal_bias="0.018"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/result_title"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toEndOf="@+id/place_image" />
 
             <TextView
                 android:id="@+id/result_rating"
-                android:layout_width="100dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="50dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginBottom="16dp"
                 android:text="Description"
                 android:textAlignment="textStart"
                 android:textColor="#ADADAD"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/result_price"
-                app:layout_constraintTop_toBottomOf="@+id/result_title"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintEnd_toStartOf="@+id/result_ratingbar"
+                app:layout_constraintStart_toEndOf="@+id/result_price" />
 
             <Button
                 android:id="@+id/add_button"
@@ -98,32 +93,30 @@
                 app:layout_constraintVertical_bias="0.375"
                 app:rippleColor="#FFFFFF" />
 
-            <TextView
-                android:id="@+id/result_date"
-                android:layout_width="56dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                android:gravity="right"
-                android:textAlignment="2"
-                android:textColor="#F63EA5"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:visibility="gone" />
-
             <RatingBar
                 android:id="@+id/result_ratingbar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="96dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="16dp"
                 android:isIndicator="true"
                 android:max="5"
                 android:numStars="5"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/result_rating" />
+
+            <ImageView
+                android:id="@+id/place_image"
+                android:layout_width="115dp"
+                android:layout_height="130dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

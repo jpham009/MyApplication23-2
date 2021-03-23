@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //
         // get data from firebase
         reference = FirebaseDatabase.getInstance().getReference().child("Itinerary");
-        Query query = reference.orderByChild("itineraryKey");
+        Query query = reference.orderByChild("itineraryDate");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

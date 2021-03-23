@@ -75,8 +75,8 @@ public class ItineraryResults extends AppCompatActivity {
                     JSONObject nameObject = results.getJSONObject(i);
                     String name = "";
                     String rating = "";
-                    String price = "N/A";
-                    String placeId = "";
+                    String price = "";
+                    String photoRef = null;
 
                     name = nameObject.getString("name");
                     if (nameObject.has("rating")) {
@@ -85,16 +85,18 @@ public class ItineraryResults extends AppCompatActivity {
                     if (nameObject.has("price_level")) {
                         price = nameObject.getString("price_level");
                     }
-                    if (nameObject.has("place_id")) {
-                        placeId = nameObject.getString("place_id");
-                    }
 //                    if (nameObject.has("place_id")) {
-////                        price = nameObject.getString("price_level");
-//                        Log.i("PHOTO: ",  String.valueOf(i));
+//                        placeId = nameObject.getString("place_id");
 //                    }
-
+                    if(nameObject.has("photos")) {
+                        JSONArray photosArray = nameObject.getJSONArray("photos");
+                        if (photosArray.getJSONObject(0).has("photo_reference")) {
+                            photoRef = photosArray.getJSONObject(0).getString("photo_reference");
+                        }
+                    }
+//
                     //add to list
-                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date, placeId);
+                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date, photoRef);
                     ItineraryResults.add(p);
 
                 }

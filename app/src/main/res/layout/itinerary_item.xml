@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
 
     android:layout_height="130dp"
-    android:layout_marginBottom="0dp"
-    android:orientation="horizontal">
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal"
+    tools:visibility="visible">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -27,77 +28,83 @@
 
             <TextView
                 android:id="@+id/itinerary_activity"
-                android:layout_width="234dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:maxLines = "2"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:maxLines="2"
                 android:text="Title"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/itinerary_date"
+                app:layout_constraintStart_toEndOf="@+id/place_image_itinerary"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/itinerary_price"
-                android:layout_width="100dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="59dp"
+                android:layout_width="60dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="16dp"
                 android:text="Description"
                 android:textAlignment="textStart"
                 android:textColor="#ADADAD"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/itinerary_rating"
-                app:layout_constraintHorizontal_bias="0.018"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/itinerary_activity"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toEndOf="@+id/place_image_itinerary" />
 
             <TextView
                 android:id="@+id/itinerary_rating"
-                android:layout_width="100dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="50dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginBottom="16dp"
                 android:text="Description"
                 android:textAlignment="textStart"
                 android:textColor="#ADADAD"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/itinerary_price"
-                app:layout_constraintTop_toBottomOf="@+id/itinerary_activity"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/itinerary_date"
-                android:layout_width="112dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_vertical"
-                android:text="dd/mm/yy"
-                android:textAlignment="textEnd"
-                android:textColor="#F63EA5"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/itinerary_ratingbar"
+                app:layout_constraintStart_toEndOf="@+id/itinerary_price" />
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/itinerary_ratingbar"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="96dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="16dp"
                 android:isIndicator="true"
                 android:max="5"
                 android:numStars="5"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/itinerary_rating" />
+
+            <TextView
+                android:id="@+id/itinerary_date"
+                android:layout_width="80dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                android:text="dd/mm/yy"
+                android:textAlignment="center"
+                android:textColor="#F63EA5"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/place_image_itinerary"
+                android:layout_width="115dp"
+                android:layout_height="130dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

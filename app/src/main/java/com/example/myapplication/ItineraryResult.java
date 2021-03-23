@@ -7,19 +7,19 @@ public class ItineraryResult {
     String resultPrice;
     String resultKey;
     String resultDate;
-    String resultPlaceId;
+    String resultPhotoRef;
 
     public ItineraryResult(){
 
     }
 
-    public ItineraryResult(String resultActivity, String resultRating, String resultPrice, String resultKey, String resultDate, String resultPlaceId) {
+    public ItineraryResult(String resultActivity, String resultRating, String resultPrice, String resultKey, String resultDate, String resultPhotoRef) {
         this.resultActivity = resultActivity;
         this.resultRating = resultRating;
         this.resultPrice = resultPrice;
         this.resultKey = resultKey;
         this.resultDate = resultDate;
-        this.resultPlaceId = resultPlaceId;
+        this.resultPhotoRef = resultPhotoRef;
     }
 
     public String getResultKey() {
@@ -35,15 +35,24 @@ public class ItineraryResult {
     }
 
     public String getResultPrice() {
-        return resultPrice;
+        switch(resultPrice) {
+            case "1":
+                return "$";
+            case "2":
+                return "$$";
+            case "3":
+                return "$$$";
+            default:
+                return "n/a";
+        }
     }
 
     public String getResultDate() {
         return resultDate;
     }
 
-    public String getResultPlaceId() {
-        return resultPlaceId;
+    public String getResultPhotoRef() {
+        return resultPhotoRef;
     }
 
 }

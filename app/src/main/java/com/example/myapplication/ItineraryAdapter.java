@@ -84,6 +84,9 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
         myViewHolder.setIsRecyclable(false);
 
         myViewHolder.itemView.setOnLongClickListener(v -> {
+            Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) ;
+            vibe.vibrate(25);
+
 
             new AlertDialog.Builder(context)
             .setTitle("Delete entry")

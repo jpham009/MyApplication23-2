@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         btnAddNew.setOnClickListener(v -> {
+            Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE) ;
+            vibe.vibrate(15);
             Intent a = new Intent(MainActivity.this, ItinerarySearch.class);
             startActivity(a);
         });

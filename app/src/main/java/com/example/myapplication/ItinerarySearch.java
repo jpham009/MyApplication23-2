@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,6 +74,7 @@ String placeGet = "";
 
         itineraryDate.setOnClickListener(v -> {
             // TODO Auto-generated method stub
+
             new DatePickerDialog(ItinerarySearch.this, date, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                     myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -116,6 +119,8 @@ String placeGet = "";
         });
 
         btnSearch.setOnClickListener(v -> {
+            Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE) ;
+            vibe.vibrate(15);
             Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
             a.putExtra("city", placeGet);
             a.putExtra("activity", itineraryActivity.getText().toString());
@@ -124,7 +129,12 @@ String placeGet = "";
 
         });
 
-        btnCancel.setOnClickListener(v -> finish());
+        btnCancel.setOnClickListener(v -> {
+            Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE) ;
+            vibe.vibrate(15);
+            finish();
+        });
+
 
     }
 

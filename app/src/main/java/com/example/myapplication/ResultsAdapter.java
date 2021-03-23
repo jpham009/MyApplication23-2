@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,6 +101,8 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
             Button addButton = itemView.findViewById(R.id.add_button);
             placeImage = itemView.findViewById(R.id.place_image);
             addButton.setOnClickListener(v -> {
+                Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) ;
+                vibe.vibrate(15);
 
                 int adapterPosition = getAdapterPosition();
                 Toast.makeText(context.getApplicationContext(), "Added " + resultsActivity.getText() + " to itinerary.",  Toast.LENGTH_SHORT).show();

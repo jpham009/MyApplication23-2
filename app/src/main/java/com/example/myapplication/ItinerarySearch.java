@@ -33,7 +33,6 @@ public class ItinerarySearch extends AppCompatActivity {
     TextView titlepage, titleActivity, titleLocation, titleDate, itineraryDate;
     EditText itineraryActivity;
     Button btnCancel;
-    Button itineraryCalender;
     Button btnSearch;
     PlacesClient placesClient;
 
@@ -41,7 +40,7 @@ public class ItinerarySearch extends AppCompatActivity {
     final Calendar myCalendar = Calendar.getInstance();
 
     private void updateLabel() {
-        String myFormat = "YYYY/MM/dd"; //In which you need put here
+        String myFormat = "YYYY/MM/dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         itineraryDate.setText(sdf.format(myCalendar.getTime()));
     };
@@ -89,7 +88,6 @@ String placeGet = "";
         //////////////// AUTOCOMPLETE /////////////////////
         // Create a new Places client instance.
         placesClient = Places.createClient(this);
-//        final String[] placeId = {""};
 
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -102,13 +100,9 @@ String placeGet = "";
                 // TODO: Get info about the selected place.
 
                 String city = place.getAddress();
-                String placeAddressComponents = place.getAddressComponents().toString();
-//                Log.i("CITY ::: ", city);
 
                 Toast.makeText(getApplicationContext(), city, Toast.LENGTH_SHORT).show();
                 placeGet = city;
-
-//                Log.i("place details", placeAddressComponents);
             }
 
             @Override
@@ -127,6 +121,7 @@ String placeGet = "";
                 itineraryActivity.setError( "Activity is required!" );
             if( itineraryDate.getText().toString().length() == 0 )
                 itineraryDate.setError( "Date is required!" );
+            //Search activity in ItineraryResults
             else {
                 Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
                 a.putExtra("city", placeGet);
@@ -134,7 +129,6 @@ String placeGet = "";
                 a.putExtra("date", itineraryDate.getText().toString());
                 startActivity(a);
             }
-
         });
 
         btnCancel.setOnClickListener(v -> {

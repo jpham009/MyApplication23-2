@@ -8,18 +8,20 @@ public class ItineraryResult {
     String resultKey;
     String resultDate;
     String resultPhotoRef;
+    String resultCity;
 
     public ItineraryResult(){
 
     }
 
-    public ItineraryResult(String resultActivity, String resultRating, String resultPrice, String resultKey, String resultDate, String resultPhotoRef) {
+    public ItineraryResult(String resultActivity, String resultRating, String resultPrice, String resultKey, String resultDate, String resultPhotoRef, String resultCity) {
         this.resultActivity = resultActivity;
         this.resultRating = resultRating;
         this.resultPrice = resultPrice;
         this.resultKey = resultKey;
         this.resultDate = resultDate;
         this.resultPhotoRef = resultPhotoRef;
+        this.resultCity = resultCity;
     }
 
     public String getResultKey() {
@@ -53,6 +55,9 @@ public class ItineraryResult {
 
     public String getResultPhotoRef() {
         return resultPhotoRef;
+    }
+    public String getResultCity() {
+        return resultCity;
     }
 
 }

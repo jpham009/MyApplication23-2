@@ -30,6 +30,7 @@ public class ItineraryResults extends AppCompatActivity {
     RecyclerView itineraryResults;
     ProgressDialog loadingDialog;
     String date = "";
+    String placeCity = "";
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -96,7 +97,7 @@ public class ItineraryResults extends AppCompatActivity {
                     }
 //
                     //add to list
-                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date, photoRef);
+                    ItineraryResult p = new ItineraryResult(name, rating, price, "0", date, photoRef, placeCity);
                     ItineraryResults.add(p);
 
                 }
@@ -136,6 +137,8 @@ public class ItineraryResults extends AppCompatActivity {
                 activity = (String) getIntent().getSerializableExtra("activity");
                 date = (String) getIntent().getSerializableExtra("date");
             }
+
+            placeCity = city;
 
             city = city.replaceAll(",", "");
 

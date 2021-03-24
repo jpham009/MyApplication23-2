@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,8 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
                 e.printStackTrace();
             }
         }
+
+//        Log.i("DAY:::::", ItineraryTasks.get(i).getItineraryMonth() + " " + ItineraryTasks.get(i).getItineraryDay() + " " + ItineraryTasks.get(i).getItineraryYear() );
 
 
         final String getItineraryActivity = ItineraryTasks.get(i).getItineraryActivity();

@@ -51,7 +51,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         myViewHolder.resultsActivity.setText(ItineraryResults.get(i).getResultActivity());
         myViewHolder.resultsPrice.setText("Price: " + ItineraryResults.get(i).getResultPrice());
         myViewHolder.resultsRating.setText("Rating: " + ItineraryResults.get(i).getResultRating());
-
+        myViewHolder.resultsCity.setText(ItineraryResults.get(i).getResultCity());
         try{
             myViewHolder.resultsRatingBar.setRating( Float.parseFloat(ItineraryResults.get(i).getResultRating()));
         } catch (NumberFormatException e) {
@@ -90,7 +90,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
         TextView resultsRating;
         RatingBar resultsRatingBar;
         ImageView placeImage;
-
+        TextView resultsCity;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +99,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
             resultsRating = itemView.findViewById(R.id.result_rating);
             resultsRatingBar = itemView.findViewById(R.id.result_ratingbar);
             Button addButton = itemView.findViewById(R.id.add_button);
+            resultsCity = itemView.findViewById(R.id.result_city);
             placeImage = itemView.findViewById(R.id.place_image);
             addButton.setOnClickListener(v -> {
                 Vibrator vibe = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE) ;
@@ -116,7 +117,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.MyViewHo
                 map.put("itineraryRating", ItineraryResults.get(adapterPosition).getResultRating());
                 map.put("itineraryDate", ItineraryResults.get(adapterPosition).getResultDate());
                 map.put("itineraryPhotoRef", ItineraryResults.get(adapterPosition).getResultPhotoRef());
-
+                map.put("itineraryCity", ItineraryResults.get(adapterPosition).getResultCity());
                 databaseReference.setValue(map);
 
                 addButton.setEnabled(false);

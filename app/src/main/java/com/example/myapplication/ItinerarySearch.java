@@ -30,7 +30,7 @@ import java.util.Locale;
 
 public class ItinerarySearch extends AppCompatActivity {
 
-    TextView titlepage, addtitle, adddesc, adddate, itineraryDate;
+    TextView titlepage, titleActivity, titleLocation, titleDate, itineraryDate;
     EditText itineraryActivity;
     Button btnCancel;
     Button itineraryCalender;
@@ -54,9 +54,9 @@ String placeGet = "";
 
         titlepage = findViewById(R.id.titlepage);
 
-        addtitle = findViewById(R.id.addtitle);
-        adddesc = findViewById(R.id.adddesc);
-        adddate = findViewById(R.id.adddate);
+        titleActivity = findViewById(R.id.titleActivity);
+        titleLocation = findViewById(R.id.titleLocation);
+        titleDate = findViewById(R.id.titleDate);
 
         itineraryActivity = findViewById(R.id.itinerary_activity);
         itineraryDate = findViewById(R.id.itinerary_date);
@@ -121,11 +121,19 @@ String placeGet = "";
         btnSearch.setOnClickListener(v -> {
             Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE) ;
             vibe.vibrate(15);
-            Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
-            a.putExtra("city", placeGet);
-            a.putExtra("activity", itineraryActivity.getText().toString());
-            a.putExtra("date", itineraryDate.getText().toString());
-            startActivity(a);
+
+            //Required fields
+            if( itineraryActivity.getText().toString().length() == 0 )
+                itineraryActivity.setError( "Activity is required!" );
+            if( itineraryDate.getText().toString().length() == 0 )
+                itineraryDate.setError( "Date is required!" );
+            else {
+                Intent a = new Intent(ItinerarySearch.this, ItineraryResults.class);
+                a.putExtra("city", placeGet);
+                a.putExtra("activity", itineraryActivity.getText().toString());
+                a.putExtra("date", itineraryDate.getText().toString());
+                startActivity(a);
+            }
 
         });
 

@@ -45,12 +45,13 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i) {
         myViewHolder.itineraryActivity.setText(ItineraryTasks.get(i).getItineraryActivity());
         myViewHolder.itineraryPrice.setText("Price: " + ItineraryTasks.get(i).getItineraryPrice());
         myViewHolder.itineraryRating.setText("Rating: " + ItineraryTasks.get(i).getItineraryRating());
+        myViewHolder.itineraryCity.setText(ItineraryTasks.get(i).getItineraryCity());
         try{
             myViewHolder.ratingBar.setRating( Float.parseFloat(ItineraryTasks.get(i).getItineraryRating()));
         } catch (NumberFormatException e) {
@@ -74,15 +75,7 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
             }
         }
 
-//        Log.i("DAY:::::", ItineraryTasks.get(i).getItineraryMonth() + " " + ItineraryTasks.get(i).getItineraryDay() + " " + ItineraryTasks.get(i).getItineraryYear() );
-
-
-        final String getItineraryActivity = ItineraryTasks.get(i).getItineraryActivity();
-        final String getItineraryPrice = ItineraryTasks.get(i).getItineraryPrice();
-        final String getItineraryRating = ItineraryTasks.get(i).getItineraryRating();
         final String getItineraryKey = ItineraryTasks.get(i).getItineraryKey();
-        final String getItineraryDate = ItineraryTasks.get(i).getItineraryDate();
-
 
         myViewHolder.setIsRecyclable(false);
 
@@ -97,19 +90,16 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
 
             // Specifying a listener allows you to take an action before dismissing the dialog.
             // The dialog is automatically dismissed when a dialog button is clicked.
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // Continue with delete operation
-//                    Toast.makeText(context, "LONGGGG CLICK", Toast.LENGTH_SHORT).show();
-                    ItineraryTasks.remove(i);
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Itinerary");
-                    ref.child(getItineraryKey).removeValue();
-                    Intent intent =new Intent(context,MainActivity.class);
-                    context.startActivity(intent);
-                    ((Activity)context).finish();
-                    ((Activity)context).overridePendingTransition (0, 0);
+            .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                // Continue with delete operation
+                ItineraryTasks.remove(i);
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Itinerary");
+                ref.child(getItineraryKey).removeValue();
+                Intent intent =new Intent(context,MainActivity.class);
+                context.startActivity(intent);
+                ((Activity)context).finish();
+                ((Activity)context).overridePendingTransition (0, 0);
 
-                }
             })
 
             // A null listener allows the button to dismiss the dialog and take no further action.
@@ -132,21 +122,22 @@ public class ItineraryAdapter extends RecyclerView.Adapter<ItineraryAdapter.MyVi
         TextView itineraryActivity;
         TextView itineraryPrice;
         TextView itineraryRating;
-        TextView itineraryKey;
         TextView itineraryDate;
+        TextView itineraryCity;
         RatingBar ratingBar;
         ImageView itineraryImage;
+
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             itineraryActivity = itemView.findViewById(R.id.itinerary_activity);
-            itineraryActivity.setSelected(true);
             itineraryPrice = itemView.findViewById(R.id.itinerary_price);
             itineraryRating = itemView.findViewById(R.id.itinerary_rating);
             ratingBar = itemView.findViewById(R.id.itinerary_ratingbar);
             itineraryDate = itemView.findViewById(R.id.itinerary_date);
             itineraryImage = itemView.findViewById(R.id.place_image_itinerary);
+            itineraryCity = itemView.findViewById(R.id.itinerary_city);
 
         }
     }

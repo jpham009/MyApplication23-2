@@ -8,9 +8,7 @@ public class ItineraryTask {
     String itineraryKey;
     String itineraryDate;
     String itineraryPhotoRef;
-    String itineraryMonth;
-    String itineraryDay;
-    String itineraryYear;
+    String itineraryCity;
 
     public ItineraryTask(){
 
@@ -42,12 +40,8 @@ public class ItineraryTask {
     public String getItineraryDate() { return itineraryDate; }
 
     public String getItineraryPhotoRef() { return itineraryPhotoRef; }
-//
-//    public String getItineraryYear() { if (itineraryDate != "") return itineraryDate.substring(0, 4); else return " ";}
-//
-//    public String getItineraryMonth() { if (itineraryDate != "" || itineraryDate != null) return itineraryDate.substring(5, 7); else return " ";}
-//
-//    public String getItineraryDay() { if (itineraryDate != "") return itineraryDate.substring(8, 10); else return " ";}
+
+    public String getItineraryCity() { return itineraryCity; }
 
 
 }
